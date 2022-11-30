@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MidtermProject</string>
+    <string name="menuItem1">Games</string>
+    <string name="menuItem2">Favourites</string>
 </resources>

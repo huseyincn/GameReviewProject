@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/gtav" />
+    
+    <TextView
+        android:id="@+id/gameId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageView1"
+        android:layout_margin="16dp"
+        android:text="GAME NAME"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/metacritict"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imageView1"
+        android:layout_below="@+id/gameId"
+        android:layout_marginTop="41dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="14sp"
+        android:text="metacritic:"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/scoreId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_below="@+id/gameId"
+        android:layout_toRightOf="@+id/metacritict"
+        android:layout_marginTop="39dp"
+        android:layout_marginLeft="3dp"
+        android:text="88"
+        android:textColor="#D80000"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#8A8A8F"
+        android:text="Action, shooter"
+        android:layout_toRightOf="@+id/imageView1"
+        android:layout_marginLeft="16dp"
+        android:textSize="14sp"
+        android:layout_below="@+id/metacritict"/>
+
+</RelativeLayout>
