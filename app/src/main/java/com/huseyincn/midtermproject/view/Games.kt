@@ -42,6 +42,9 @@ class Games : Fragment() {
         contacts.add(Game("geyta",23, arrayOf("A","B")))
         contacts.add(Game("valorant",32, arrayOf("c","D")))
         contacts.add(Game("csgo",44, arrayOf("e","F")))
+        contacts.add(Game("testing",22, arrayOf("z","x")))
+        contacts.add(Game("purposes",52, arrayOf("sd","Dasd")))
+        contacts.add(Game("items",65, arrayOf("ea","Fas")))
 
         val adapter = AdapterRecycler(contacts)
 
