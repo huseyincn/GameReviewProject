@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huseyincn.midtermproject.R
 import com.huseyincn.midtermproject.viewModel.DetailsViewModel
 
@@ -30,4 +33,12 @@ class Details : Fragment() {
         // TODO: Use the ViewModel
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //setOnClickListeners(view)
+        view.findViewById<TextView>(R.id.back2).setOnClickListener { requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView2, Games()).commit()}
+        view.findViewById<ImageView>(R.id.back1).setOnClickListener { requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView2, Games()).commit()}
+
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility=View.INVISIBLE
+    }
 }

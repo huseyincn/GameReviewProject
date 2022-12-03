@@ -1,24 +1,60 @@
 package com.huseyincn.midtermproject.view
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.huseyincn.midtermproject.R
 import com.huseyincn.midtermproject.model.Game
 
-class AdapterRecycler(private val dataSet: ArrayList<Game>) :
+
+class AdapterRecycler() :
     RecyclerView.Adapter<AdapterRecycler.ViewHolder>() {
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        //val textView: TextView
+
+    private val _data = ArrayList<Game>()
+
+    fun updateData(newList: ArrayList<Game>) {
+        _data.clear()
+        _data.addAll(newList)
+        notifyDataSetChanged()
+    }
+
+    fun addItem(position: Int, toAdd: Game) {
+        _data.add(position, toAdd)
+        notifyItemInserted(position)
+    }
+
+    fun removeItem(toRemove: Game) {
+        val position = _data.indexOf(toRemove)
+        if (position != -1) {
+            _data.removeAt(position)
+            notifyItemRemoved(position)
+        }
+    }
+
+
+    class ViewHolder(view: View, listener: onItemClickListener) : RecyclerView.ViewHolder(view) {
+        val name: TextView = view.findViewById(R.id.gameId)
+        val score: TextView = view.findViewById(R.id.scoreId)
+        val genre: TextView = view.findViewById(R.id.genres)
+        val layout1: RelativeLayout = view.findViewById(R.id.rowlayout)
 
         init {
+
             // Define click listener for the ViewHolder's View.
-           // textView = view.findViewById(R.id.textView)
+            //val textView : TextView = view.findViewById(R.id.gameId)
+
+            itemView.setOnClickListener {
+                layout1.setBackgroundColor(Color.rgb(224,224,224))
+                listener.onItemClick(adapterPosition)
+           }
         }
     }
 
@@ -28,7 +64,7 @@ class AdapterRecycler(private val dataSet: ArrayList<Game>) :
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.text_row_item, viewGroup, false)
 
-        return ViewHolder(view)
+        return ViewHolder(view, listenerItems)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -36,11 +72,28 @@ class AdapterRecycler(private val dataSet: ArrayList<Game>) :
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        //viewHolder.textView.text = dataSet[position]
+        viewHolder.name.text = _data[position].name.toString()
+        viewHolder.score.text = _data[position].score.toString()
+        viewHolder.genre.text = _data[position].genres.joinToString(", ")
     }
 
+    private lateinit var listenerItems: onItemClickListener
+
+    interface onItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickListener) {
+        listenerItems = listener
+    }
+
+    fun gameSpecFromAdapter(pos: Int): Game {
+        return _data[pos]
+    }
+
+
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = _data.size
 
 }
 

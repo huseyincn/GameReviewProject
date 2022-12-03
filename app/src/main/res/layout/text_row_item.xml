@@ -2,7 +2,9 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:id="@+id/rowlayout">
 
     <ImageView
         android:id="@+id/imageView1"
@@ -15,18 +17,21 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/gtav" />
-    
+
     <TextView
         android:id="@+id/gameId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:layout_toRightOf="@+id/imageView1"
-        android:layout_margin="16dp"
         android:text="GAME NAME"
         android:textColor="#000000"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/metacritict"
@@ -50,9 +55,11 @@
         android:layout_marginTop="39dp"
         android:layout_marginLeft="3dp"
         android:text="88"
+        android:textStyle="bold"
         android:textColor="#D80000"/>
 
     <TextView
+        android:id="@+id/genres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#8A8A8F"
