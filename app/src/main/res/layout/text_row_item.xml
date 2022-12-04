@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rowlayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
-    android:id="@+id/rowlayout">
+    android:background="#ffffff">
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -27,7 +26,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_toEndOf="@+id/imageView1"
         android:text="GAME NAME"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -37,36 +36,36 @@
         android:id="@+id/metacritict"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imageView1"
         android:layout_below="@+id/gameId"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="41dp"
-        android:layout_marginLeft="16dp"
-        android:textSize="14sp"
+        android:layout_toEndOf="@+id/imageView1"
         android:text="metacritic:"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/scoreId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
         android:layout_below="@+id/gameId"
-        android:layout_toRightOf="@+id/metacritict"
+        android:layout_marginStart="3dp"
         android:layout_marginTop="39dp"
-        android:layout_marginLeft="3dp"
+        android:layout_toEndOf="@+id/metacritict"
         android:text="88"
-        android:textStyle="bold"
-        android:textColor="#D80000"/>
+        android:textColor="#D80000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/genres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#8A8A8F"
+        android:layout_below="@+id/metacritict"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/imageView1"
         android:text="Action, shooter"
-        android:layout_toRightOf="@+id/imageView1"
-        android:layout_marginLeft="16dp"
-        android:textSize="14sp"
-        android:layout_below="@+id/metacritict"/>
+        android:textColor="#8A8A8F"
+        android:textSize="14sp" />
 
 </RelativeLayout>

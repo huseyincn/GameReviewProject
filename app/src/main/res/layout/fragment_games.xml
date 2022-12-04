@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.Games"
+    android:background="#EBF8F8F8"
     android:orientation="vertical"
-    android:background="#E5E5E5">
+    tools:context=".view.Games">
 
     <TextView
         android:id="@+id/header_title1"
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:text="Games"
-        android:gravity="bottom"
-        android:textSize="34sp"
-        android:textColor="#000000"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="9dp"
-        android:background="#f8f8f8"
-        android:textStyle="bold"/>
+        android:background="#EBF8F8F8"
+        android:gravity="bottom"
+        android:text="Games"
+        android:textColor="#000000"
+        android:singleLine="true"
+        android:textSize="34sp"
+        android:textStyle="bold" />
 
     <androidx.appcompat.widget.SearchView
-        app:iconifiedByDefault="false"
+        android:id="@+id/searcher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:queryHint="Search for the games"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
+        android:layout_gravity="start"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="6dp"
         android:layout_marginRight="16dp"
-        android:layout_gravity="left"/>
+        android:layout_marginBottom="6dp"
+        android:background="#1F8E8E93"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search for the games" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:background="#ffffff" />
 </LinearLayout>
