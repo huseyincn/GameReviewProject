@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huseyincn.midtermproject.R
 import com.huseyincn.midtermproject.model.Game
+import com.huseyincn.midtermproject.view.adapters.AdapterRecycler
 import com.huseyincn.midtermproject.viewModel.GamesViewModel
 import kotlin.collections.ArrayList
 

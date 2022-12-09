@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#E6FFFFFF"
     android:orientation="vertical"
     tools:context=".view.Details">
@@ -49,25 +50,38 @@
             android:textSize="17sp" />
     </LinearLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <ImageView
+        android:id="@+id/imagegame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gtav"
-        android:contentDescription="Image of game" />
+        android:contentDescription="Image of game"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="192dp"
-        android:layout_marginTop="-192dp"
-        android:background="@drawable/gradientbackeffect" />
+        android:background="@drawable/gradientbackeffect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/imagegame"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="-68dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imagegame"
+        app:layout_constraintStart_toStartOf="parent"
         android:fontFamily="@font/sfprodisplaybold"
+        app:layout_constraintEnd_toEndOf="parent"
         android:letterSpacing="0.0038"
         android:lineHeight="40sp"
         android:text="Grand Theft Auto V"
@@ -76,6 +90,7 @@
         android:textColor="#FFFFFF"
         android:textSize="36sp" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

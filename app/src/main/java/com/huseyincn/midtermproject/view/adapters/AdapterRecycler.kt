@@ -1,4 +1,4 @@
-package com.huseyincn.midtermproject.view
+package com.huseyincn.midtermproject.view.adapters
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -12,7 +12,8 @@ import com.huseyincn.midtermproject.R
 import com.huseyincn.midtermproject.model.Game
 
 
-class AdapterRecycler() : RecyclerView.Adapter<AdapterRecycler.ViewHolder>() {
+class AdapterRecycler(val renkli: Boolean = true) :
+    RecyclerView.Adapter<AdapterRecycler.ViewHolder>() {
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
@@ -70,8 +71,10 @@ class AdapterRecycler() : RecyclerView.Adapter<AdapterRecycler.ViewHolder>() {
         viewHolder.name.text = _data[position].name.toString()
         viewHolder.score.text = _data[position].score.toString()
         viewHolder.genre.text = _data[position].genres.joinToString(", ")
-        val color = if (_data[position].isChecked) Color.parseColor("#E0E0E0") else Color.WHITE
-        viewHolder.layout1.setBackgroundColor(color)
+        if (renkli == true) {
+            val color = if (_data[position].isChecked) Color.parseColor("#E0E0E0") else Color.WHITE
+            viewHolder.layout1.setBackgroundColor(color)
+        }
     }
 
     private lateinit var listenerItems: onItemClickListener

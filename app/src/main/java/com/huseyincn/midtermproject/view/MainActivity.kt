@@ -2,6 +2,7 @@ package com.huseyincn.midtermproject.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener)
         viewModel = ViewModelProvider(this)[GamesViewModel::class.java]
         viewModel.updateData(MockRepository.testArray())
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     private val navListener = BottomNavigationView.OnNavigationItemSelectedListener {

@@ -45,7 +45,7 @@ class Details : Fragment() {
         var bundle1 = this.requireArguments()
         val gamePos: Int = bundle1.get("pos") as Int
         val gameData: Game? = viewModel.liveData.value?.get(gamePos)
-        var isFav: Boolean = false
+        var isFav = false
         gameData?.let {
             isFav = it.isFav
         }
@@ -62,9 +62,9 @@ class Details : Fragment() {
         textfav.setOnClickListener {
             if (!isFav) {
                 val prev: Boolean? = viewModel.liveData.value?.get(gamePos)?.isFav
-                viewModel.liveData.value?.get(gamePos)?.isFav  = !prev!!
+                viewModel.liveData.value?.get(gamePos)?.isFav = !prev!!
                 isFav = !prev
-                changeTheValue(!prev,textfav)
+                changeTheValue(!prev, textfav)
             }
         }
     }
@@ -79,3 +79,4 @@ class Details : Fragment() {
         else textFav.text = "Favourite"
     }
 }
+

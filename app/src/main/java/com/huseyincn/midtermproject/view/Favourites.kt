@@ -1,12 +1,15 @@
 package com.huseyincn.midtermproject.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -14,13 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.huseyincn.midtermproject.R
 import com.huseyincn.midtermproject.model.Game
+import com.huseyincn.midtermproject.view.adapters.AdapterRecycler
 import com.huseyincn.midtermproject.viewModel.GamesViewModel
 
 class Favourites : Fragment() {
 
     private lateinit var viewModel: GamesViewModel
     val favGames: ArrayList<Game> = ArrayList()
-    val adapter = AdapterRecycler()
+    val adapter = AdapterRecycler(renkli = false)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -28,10 +32,13 @@ class Favourites : Fragment() {
         return inflater.inflate(R.layout.fragment_favourites, container, false)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recview: RecyclerView = view.findViewById(R.id.recyclerview1)
         val nogame: TextView = view.findViewById(R.id.nogame)
+        val recylay : ConstraintLayout = view.findViewById(R.id.recviewlay)
+        val linlay : LinearLayout = view.findViewById(R.id.linlay)
 
         recview.adapter = adapter
         recview.layoutManager = LinearLayoutManager(context)
@@ -40,19 +47,22 @@ class Favourites : Fragment() {
         swipeAnimAdd(recview)
 
         viewModel.liveData.observe(viewLifecycleOwner, Observer {
-            favGames?.clear()
+            favGames.clear()
             for (game in it) {
                 if (game.isFav) favGames.add(game)
             }
             if (favGames.isEmpty()) {
-                recview.visibility = View.INVISIBLE
-                nogame.visibility = View.VISIBLE
+//                recview.visibility = View.GONE
+                recylay.visibility = View.GONE
+//                nogame.visibility = View.VISIBLE
+                linlay.visibility = View.VISIBLE
             } else {
-                recview.visibility = View.VISIBLE
-                nogame.visibility = View.INVISIBLE
+//                recview.visibility = View.VISIBLE
+                recylay.visibility = View.VISIBLE
+//                nogame.visibility = View.GONE
+                linlay.visibility = View.GONE
             }
             adapter.updateData(favGames)
-            adapter.notifyDataSetChanged()
         })
     }
 
@@ -91,6 +101,7 @@ class Favourites : Fragment() {
                 return false
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val builder = AlertDialog.Builder(requireActivity())
                 builder.setMessage("Are you sure you want to Delete?").setCancelable(false)
@@ -101,6 +112,8 @@ class Favourites : Fragment() {
                         val setFalse = viewModel.liveData.value?.indexOf(silinecek)
                         favGames.remove(silinecek)
                         setFalse?.let { viewModel.liveData.value?.get(it)?.isFav = false }
+//                        adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                        adapter.updateData(favGames)
                     }.setNegativeButton("No") { dialog, id ->
                         // Dismiss the dialog
                         adapter.notifyDataSetChanged()
