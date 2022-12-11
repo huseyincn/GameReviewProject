@@ -35,7 +35,7 @@ class Details : Fragment() {
 
     fun disableBottomNav() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility =
-            View.INVISIBLE
+            View.GONE
     }
 
     fun setClickListeners(view: View) {

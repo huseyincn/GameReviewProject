@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.huseyincn.midtermproject.R
 import com.huseyincn.midtermproject.model.Game
@@ -45,7 +46,7 @@ class AdapterRecycler(val renkli: Boolean = true) :
         val name: TextView = view.findViewById(R.id.gameId)
         val score: TextView = view.findViewById(R.id.scoreId)
         val genre: TextView = view.findViewById(R.id.genres)
-        val layout1: RelativeLayout = view.findViewById(R.id.rowlayout)
+        val layout1: ConstraintLayout = view.findViewById(R.id.rowlayout)
 
         init {
             // Define click listener for the ViewHolder's View.

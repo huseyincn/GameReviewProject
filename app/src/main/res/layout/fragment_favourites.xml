@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#EBF8F8F8"
     android:orientation="vertical"
     tools:context=".view.Favourites">
@@ -13,48 +12,49 @@
         android:id="@+id/header_title1"
         android:layout_width="match_parent"
         android:layout_height="140dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="9dp"
         android:background="#EBF8F8F8"
+        android:gravity="bottom"
         android:text="Favourites"
         android:textColor="#000000"
+        android:fontFamily="@font/sfprodisplaybold"
+        android:lineHeight="41sp"
+        android:letterSpacing="0.0041"
         android:textSize="34sp"
-        android:textStyle="bold"
-        android:gravity="bottom"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="9dp" />
+        android:textStyle="bold" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recviewlay"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recviewlay">
+        android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="UnknownId" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UnknownId" />
+
+        <TextView
+            android:id="@+id/nogame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/sfprodisplaymedium"
+            android:gravity="center"
+            android:text="There is no favourites found."
+            android:textAlignment="gravity"
+            android:textColor="#000000"
+            android:letterSpacing="0.0041"
+            android:lineHeight="41sp"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/linlay"
-        android:orientation="vertical">
-    <TextView
-        android:id="@+id/nogame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sfprodisplay"
-        android:gravity="center"
-        android:text="There is no favourites found."
-        android:textAlignment="gravity"
-        android:layout_marginTop="36dp"
-        android:textColor="#000000"
-        android:textSize="18sp" />
-    </LinearLayout>
+
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -34,39 +35,43 @@ class Games : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility =
-            View.VISIBLE
+
         val recView1 = view.findViewById<View>(R.id.recyclerview1) as RecyclerView
-        val searcher : SearchView = view.findViewById(R.id.searcher)
+        val searcher: SearchView = view.findViewById(R.id.searcher)
+        val nogame: TextView = view.findViewById(R.id.nogamese)
         val adapter = AdapterRecycler()
+
+        nogame.visibility = View.GONE
         recView1.adapter = adapter
         recView1.layoutManager = LinearLayoutManager(context)
+        enableBottomNavBar()
 
         viewModel.liveData.observe(viewLifecycleOwner, Observer {
             adapter.updateData(it)
         })
 
 
-        val queryListener =
-            object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText?.length!! >= 3) {
-                        val newArr: ArrayList<Game>? =
-                            viewModel.liveData.value?.let {
-                                filter(it, newText)
-                            }
-                        newArr?.let { adapter.updateData(it) }
-                        recView1.scrollToPosition(0)
-                    } else {
-                        viewModel.liveData.value?.let { adapter.updateData(it) }
-                    }
-                    return true
-                }
+        val queryListener = object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                TODO("Not yet implemented")
             }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText?.length!! >= 3) {
+                    val newArr: ArrayList<Game>? = viewModel.liveData.value?.let {
+                        filter(it, newText)
+                    }
+                    newArr?.let { adapter.updateData(it) }
+                    recView1.scrollToPosition(0)
+                    if (newArr?.count() == 0)
+                        nogame.visibility = View.VISIBLE
+                } else {
+                    nogame.visibility = View.GONE
+                    viewModel.liveData.value?.let { adapter.updateData(it) }
+                }
+                return true
+            }
+        }
 
         searcher.setOnQueryTextListener(queryListener)
         setClickListeners(adapter)
@@ -105,6 +110,11 @@ class Games : Fragment() {
             }
         }
         return filteredModelList
+    }
+
+    private fun enableBottomNavBar() {
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility =
+            View.VISIBLE
     }
 
 }

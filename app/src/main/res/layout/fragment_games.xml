@@ -15,11 +15,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="9dp"
         android:background="#EBF8F8F8"
+        android:fontFamily="@font/sfprodisplaybold"
         android:gravity="bottom"
+        android:singleLine="true"
         android:text="Games"
         android:textColor="#000000"
-        android:singleLine="true"
         android:textSize="34sp"
+        android:lineHeight="41sp"
+        android:letterSpacing="0.0041"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.SearchView
@@ -31,13 +34,41 @@
         android:layout_marginTop="6dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="6dp"
-        android:background="#1F8E8E93"
+        android:background="@drawable/roundedeffect"
+        app:submitBackground="@drawable/roundedeffect"
         app:iconifiedByDefault="false"
         app:queryHint="Search for the games" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview1"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/nogamese"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38dp"
+            android:fontFamily="@font/sfprodisplaymedium"
+            android:gravity="center"
+            android:text="No game has been searched."
+            android:textAlignment="gravity"
+            android:textSize="18sp"
+            android:lineHeight="41sp"
+            android:letterSpacing="0.0041"
+
+            android:textColor="#000000"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

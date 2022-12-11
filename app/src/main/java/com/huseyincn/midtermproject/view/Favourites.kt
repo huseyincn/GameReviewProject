@@ -25,6 +25,7 @@ class Favourites : Fragment() {
     private lateinit var viewModel: GamesViewModel
     val favGames: ArrayList<Game> = ArrayList()
     val adapter = AdapterRecycler(renkli = false)
+    lateinit var headerTitle: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -37,8 +38,7 @@ class Favourites : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recview: RecyclerView = view.findViewById(R.id.recyclerview1)
         val nogame: TextView = view.findViewById(R.id.nogame)
-        val recylay : ConstraintLayout = view.findViewById(R.id.recviewlay)
-        val linlay : LinearLayout = view.findViewById(R.id.linlay)
+        headerTitle = view.findViewById(R.id.header_title1)
 
         recview.adapter = adapter
         recview.layoutManager = LinearLayoutManager(context)
@@ -52,17 +52,17 @@ class Favourites : Fragment() {
                 if (game.isFav) favGames.add(game)
             }
             if (favGames.isEmpty()) {
-//                recview.visibility = View.GONE
-                recylay.visibility = View.GONE
-//                nogame.visibility = View.VISIBLE
-                linlay.visibility = View.VISIBLE
+                recview.visibility = View.GONE
+                nogame.visibility = View.VISIBLE
             } else {
-//                recview.visibility = View.VISIBLE
-                recylay.visibility = View.VISIBLE
-//                nogame.visibility = View.GONE
-                linlay.visibility = View.GONE
+                recview.visibility = View.VISIBLE
+                nogame.visibility = View.GONE
             }
             adapter.updateData(favGames)
+            if (favGames.count() != 0)
+                headerTitle.text = "Favourites (${favGames.count()})"
+            else
+                headerTitle.text = "Favourites"
         })
     }
 
@@ -114,6 +114,10 @@ class Favourites : Fragment() {
                         setFalse?.let { viewModel.liveData.value?.get(it)?.isFav = false }
 //                        adapter.notifyItemRemoved(viewHolder.adapterPosition)
                         adapter.updateData(favGames)
+                        if (favGames.count() != 0)
+                            headerTitle.text = "Favourites (${favGames.count()})"
+                        else
+                            headerTitle.text = "Favourites"
                     }.setNegativeButton("No") { dialog, id ->
                         // Dismiss the dialog
                         adapter.notifyDataSetChanged()
