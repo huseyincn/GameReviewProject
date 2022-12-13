@@ -6,10 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -44,7 +42,7 @@ class Favourites : Fragment() {
         recview.layoutManager = LinearLayoutManager(context)
 
         setClickListeners(adapter)
-        swipeAnimAdd(recview)
+        swipeAnimAdd(recview, nogame)
 
         viewModel.liveData.observe(viewLifecycleOwner, Observer {
             favGames.clear()
@@ -90,7 +88,7 @@ class Favourites : Fragment() {
         })
     }
 
-    private fun swipeAnimAdd(recview: RecyclerView) {
+    private fun swipeAnimAdd(recview: RecyclerView, nogame: TextView) {
         val itemtouchh = object :
             ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
             override fun onMove(
@@ -116,8 +114,11 @@ class Favourites : Fragment() {
                         adapter.updateData(favGames)
                         if (favGames.count() != 0)
                             headerTitle.text = "Favourites (${favGames.count()})"
-                        else
+                        else {
                             headerTitle.text = "Favourites"
+                            recview.visibility = View.GONE
+                            nogame.visibility = View.VISIBLE
+                        }
                     }.setNegativeButton("No") { dialog, id ->
                         // Dismiss the dialog
                         adapter.notifyDataSetChanged()
