@@ -3,7 +3,7 @@ package com.huseyincn.midtermproject.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.huseyincn.midtermproject.model.Game
+import com.huseyincn.midtermproject.model.data.Game
 
 
 class GamesViewModel : ViewModel() {

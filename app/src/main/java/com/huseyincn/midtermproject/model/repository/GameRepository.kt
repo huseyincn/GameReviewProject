@@ -1,4 +1,4 @@
-package com.huseyincn.midtermproject.data.repository
+package com.huseyincn.midtermproject.model.repository
 
 class GameRepository {
 }

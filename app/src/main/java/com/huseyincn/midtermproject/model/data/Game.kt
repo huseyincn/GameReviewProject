@@ -1,4 +1,4 @@
-package com.huseyincn.midtermproject.model
+package com.huseyincn.midtermproject.model.data
 
 /*
 name = oyunun ismini tutuyor

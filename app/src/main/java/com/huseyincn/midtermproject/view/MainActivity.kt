@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huseyincn.midtermproject.R
-import com.huseyincn.midtermproject.data.repository.MockRepository
+import com.huseyincn.midtermproject.model.repository.MockRepository
 import com.huseyincn.midtermproject.viewModel.GamesViewModel
 
 class MainActivity : AppCompatActivity() {

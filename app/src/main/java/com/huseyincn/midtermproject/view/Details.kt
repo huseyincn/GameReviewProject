@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huseyincn.midtermproject.R
-import com.huseyincn.midtermproject.model.Game
+import com.huseyincn.midtermproject.model.data.Game
 import com.huseyincn.midtermproject.viewModel.GamesViewModel
 
 class Details : Fragment() {

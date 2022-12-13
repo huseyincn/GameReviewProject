@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.huseyincn.midtermproject.R
-import com.huseyincn.midtermproject.model.Game
+import com.huseyincn.midtermproject.model.data.Game
 import com.huseyincn.midtermproject.view.adapters.AdapterRecycler
 import com.huseyincn.midtermproject.viewModel.GamesViewModel
 

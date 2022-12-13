@@ -1,6 +1,6 @@
-package com.huseyincn.midtermproject.data.repository
+package com.huseyincn.midtermproject.model.repository
 
-import com.huseyincn.midtermproject.model.Game
+import com.huseyincn.midtermproject.model.data.Game
 
 class MockRepository {
 
