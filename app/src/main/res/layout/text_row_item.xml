@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/gtav" />
+        android:background="@color/white" />
 
     <TextView
         android:id="@+id/gameId"

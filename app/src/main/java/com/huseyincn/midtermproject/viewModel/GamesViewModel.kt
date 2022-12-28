@@ -15,8 +15,25 @@ class GamesViewModel : ViewModel() {
         _gameDatas.value?.add(toAdd)
     }
 
-    fun updateData(toAdd: ArrayList<Game>) {
+    fun updateData(toAdd: List<Game>) {
         _gameDatas.value?.clear()
         _gameDatas.value?.addAll(toAdd)
     }
 }
+
+/*
+
+private val _gameDatas: MutableLiveData<ArrayList<Game>> = MutableLiveData(ArrayList())
+    val liveData: LiveData<ArrayList<Game>> = _gameDatas
+
+
+    fun addItem(toAdd: Game) {
+        _gameDatas.value?.add(toAdd)
+    }
+
+    fun updateData(toAdd: ArrayList<Game>) {
+        _gameDatas.value?.clear()
+        _gameDatas.value?.addAll(toAdd)
+    }
+
+ */

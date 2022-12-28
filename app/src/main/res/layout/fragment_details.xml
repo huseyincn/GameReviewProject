@@ -52,14 +52,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="300dp">
 
         <ImageView
             android:id="@+id/imagegame"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/gtav"
+            android:layout_height="match_parent"
             android:contentDescription="Image of game"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,6 +74,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
+            android:id="@+id/gamename"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -106,6 +107,7 @@
         android:textSize="17sp" />
 
     <TextView
+        android:id="@+id/describ"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -127,6 +129,7 @@
         android:background="#000000" />
 
     <TextView
+        android:id="@+id/redditlink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -144,6 +147,7 @@
         android:background="#000000" />
 
     <TextView
+        android:id="@+id/websitelink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

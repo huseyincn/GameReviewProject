@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener)
         viewModel = ViewModelProvider(this)[GamesViewModel::class.java]
-        viewModel.updateData(MockRepository.testArray())
+        // viewModel.updateData(MockRepository.testArray())
 //        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         val favGames: ArrayList<String> = ArrayList()

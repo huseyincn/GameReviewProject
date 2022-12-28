@@ -1,5 +1,20 @@
 package com.huseyincn.midtermproject.model.data
 
+data class Game(
+    val id: Int,
+    val name: String,
+    val metacritic: Int?,
+    val genres: List<Genres>,
+    val background_image: String?,
+    var isChecked: Boolean = false,
+    var isFav: Boolean = false
+)
+
+
+/*
+
+package com.huseyincn.midtermproject.model.data
+
 /*
 name = oyunun ismini tutuyor
 score = meta critict değerini tutuyor
@@ -20,3 +35,5 @@ data class Game(
 // oyun görseli
 // oyun reddit page
 // oyun website
+
+ */

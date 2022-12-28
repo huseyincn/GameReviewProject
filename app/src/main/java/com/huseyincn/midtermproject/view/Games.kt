@@ -1,6 +1,10 @@
 package com.huseyincn.midtermproject.view
 
+import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,17 +18,37 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huseyincn.midtermproject.R
 import com.huseyincn.midtermproject.model.data.Game
+import com.huseyincn.midtermproject.model.data.RawgResp
+import com.huseyincn.midtermproject.model.repository.rawgInterface
 import com.huseyincn.midtermproject.view.adapters.AdapterRecycler
+import com.huseyincn.midtermproject.viewModel.DescViewModel
 import com.huseyincn.midtermproject.viewModel.GamesViewModel
-import kotlin.collections.ArrayList
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+
 
 class Games : Fragment() {
 
-    companion object {
-        fun newInstance() = Games()
-    }
-
     private lateinit var viewModel: GamesViewModel
+    private lateinit var descVM: DescViewModel
+
+    private val GAMEURL =
+        "https://api.rawg.io/api/"
+
+    private val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
+    private val retrofit = Retrofit.Builder()
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .baseUrl(GAMEURL)
+        .build()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -53,49 +77,38 @@ class Games : Fragment() {
 
         val queryListener = object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                TODO("Not yet implemented")
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText?.length!! >= 3) {
-                    val newArr: ArrayList<Game>? = viewModel.liveData.value?.let {
-                        filter(it, newText)
-                    }
-                    newArr?.let { adapter.updateData(it) }
-                    recView1.scrollToPosition(0)
-                    if (newArr?.count() == 0)
-                        nogame.visibility = View.VISIBLE
+                if (query?.length!! >= 3) {
+                    searchTheGame(query,adapter)
                 } else {
                     nogame.visibility = View.GONE
                     viewModel.liveData.value?.let { adapter.updateData(it) }
                 }
                 return true
             }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
         }
 
         searcher.setOnQueryTextListener(queryListener)
         setClickListeners(adapter)
+    //getDatas(adapter)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[GamesViewModel::class.java]
+        descVM = ViewModelProvider(requireActivity())[DescViewModel::class.java]
+        getDatasonCreate()
     }
 
     private fun setClickListeners(adapter: AdapterRecycler) {
         adapter.setOnItemClickListener(object : AdapterRecycler.onItemClickListener {
             override fun onItemClick(position: Int) {
-                val bundle = Bundle()
-                bundle.putInt("pos", position)
-
-                val fragmentToGo = Details()
-                fragmentToGo.arguments = bundle
-
                 val item = viewModel.liveData.value!![position]
                 item.isChecked = true
-                // OYUNUN DETAIL SAYFASINA GOTURUYOR
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerView2, fragmentToGo).commit()
+                getDesc(viewModel.liveData.value!![position].id)
             }
         })
     }
@@ -117,4 +130,101 @@ class Games : Fragment() {
             View.VISIBLE
     }
 
+    private fun getDatas(adapter: AdapterRecycler) {
+        val apiService = retrofit.create(rawgInterface::class.java)
+        val results = apiService.getGames()
+        results.enqueue(object : Callback<RawgResp> {
+            override fun onResponse(call: Call<RawgResp>, response: Response<RawgResp>) {
+                if (response.code() == 200) {
+                    var gamelist = response.body()
+                    gamelist?.let {
+                        viewModel.updateData(it.results)
+                        adapter.updateData(it.results)
+                    }
+                    println(gamelist)
+                }
+            }
+
+            override fun onFailure(call: Call<RawgResp>, t: Throwable) {
+                Log.e("hata", "api çekilirken hata oluştu")
+            }
+        })
+    }
+
+
+    private fun getDatasonCreate() {
+        val apiService = retrofit.create(rawgInterface::class.java)
+        val results = apiService.getGames()
+        results.enqueue(object : Callback<RawgResp> {
+            override fun onResponse(call: Call<RawgResp>, response: Response<RawgResp>) {
+                if (response.code() == 200) {
+                    var gamelist = response.body()
+                    gamelist?.let {
+                        viewModel.updateData(it.results)
+                    }
+                    println(gamelist)
+                }
+            }
+
+            override fun onFailure(call: Call<RawgResp>, t: Throwable) {
+                Log.e("hata", "api çekilirken hata oluştu")
+            }
+        })
+    }
+
+    private fun getDesc(id: Int) {
+        val apiService = retrofit.create(rawgInterface::class.java)
+        val results = apiService.getGameDetail(id)
+
+        val SDK_INT = Build.VERSION.SDK_INT
+        if (SDK_INT > 8) {
+            val policy = ThreadPolicy.Builder()
+                .permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+            //your codes here
+
+            val asdasd = results.execute().body()
+//            println("aasdasd")
+//            val bundle = Bundle()
+//            bundle.putStringArrayList(
+//                "Desc",
+//                arrayListOf(
+//                    descVM.liveData.value?.name,
+//                    descVM.liveData.value?.description,
+//                    descVM.liveData.value?.reddit_url,
+//                    descVM.liveData.value?.website,
+//                    descVM.liveData.value?.background_image
+//                )
+//            )
+            if (asdasd != null) {
+                descVM.setItem(asdasd)
+            }
+            val fragmentToGo = Details()
+//
+//         fragmentToGo.arguments = bundle
+            // OYUNUN DETAIL SAYFASINA GOTURUYOR
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView2, fragmentToGo).commit()
+        }
+    }
+
+    private fun searchTheGame(arancak: String, adapter: AdapterRecycler) {
+        val apiService = retrofit.create(rawgInterface::class.java)
+        val results = apiService.getSearched(searched = arancak)
+        val SDK_INT = Build.VERSION.SDK_INT
+        if (SDK_INT > 8) {
+            val policy = ThreadPolicy.Builder()
+                .permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+            //your codes here
+
+            val asdasd = results.execute().body()
+
+            if (asdasd != null) {
+                viewModel.updateData(asdasd.results)
+                adapter.updateData(asdasd.results)
+
+            }
+        }
+    }
 }

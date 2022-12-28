@@ -5,11 +5,13 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.huseyincn.midtermproject.R
 import com.huseyincn.midtermproject.model.data.Game
+import com.squareup.picasso.Picasso
 
 
 class AdapterRecycler(val renkli: Boolean = true) :
@@ -22,7 +24,7 @@ class AdapterRecycler(val renkli: Boolean = true) :
     private val _data = ArrayList<Game>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateData(newList: ArrayList<Game>) {
+    fun updateData(newList: List<Game>) {
         _data.clear()
         _data.addAll(newList)
         notifyDataSetChanged()
@@ -46,6 +48,7 @@ class AdapterRecycler(val renkli: Boolean = true) :
         val score: TextView = view.findViewById(R.id.scoreId)
         val genre: TextView = view.findViewById(R.id.genres)
         val layout1: ConstraintLayout = view.findViewById(R.id.rowlayout)
+        val resimcer : ImageView = view.findViewById(R.id.imageView1)
 
         init {
             // Define click listener for the ViewHolder's View.
@@ -69,8 +72,9 @@ class AdapterRecycler(val renkli: Boolean = true) :
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.name.text = _data[position].name.toString()
-        viewHolder.score.text = _data[position].score.toString()
+        viewHolder.score.text = _data[position].metacritic.toString()
         viewHolder.genre.text = _data[position].genres.joinToString(", ")
+        Picasso .get().load(_data[position].background_image).fit().into(viewHolder.resimcer)
         if (renkli == true) {
             val color = if (_data[position].isChecked) Color.parseColor("#E0E0E0") else Color.WHITE
             viewHolder.layout1.setBackgroundColor(color)
