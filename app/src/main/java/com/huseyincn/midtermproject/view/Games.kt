@@ -78,7 +78,7 @@ class Games : Fragment() {
         val queryListener = object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.length!! >= 3) {
-                    searchTheGame(query,adapter)
+                    searchTheGame(query,adapter,nogame)
                 } else {
                     nogame.visibility = View.GONE
                     viewModel.liveData.value?.let { adapter.updateData(it) }
@@ -208,7 +208,7 @@ class Games : Fragment() {
         }
     }
 
-    private fun searchTheGame(arancak: String, adapter: AdapterRecycler) {
+    private fun searchTheGame(arancak: String, adapter: AdapterRecycler, nogame: TextView) {
         val apiService = retrofit.create(rawgInterface::class.java)
         val results = apiService.getSearched(searched = arancak)
         val SDK_INT = Build.VERSION.SDK_INT
@@ -221,8 +221,13 @@ class Games : Fragment() {
             val asdasd = results.execute().body()
 
             if (asdasd != null) {
+                if (asdasd.count == 0)
+                    nogame.visibility = View.VISIBLE
+                else
+                    nogame.visibility = View.GONE
                 viewModel.updateData(asdasd.results)
                 adapter.updateData(asdasd.results)
+
 
             }
         }
