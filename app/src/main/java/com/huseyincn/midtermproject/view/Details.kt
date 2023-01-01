@@ -57,7 +57,7 @@ class Details : Fragment() {
         val textfav: TextView = view.findViewById(R.id.favourites)
 
         if (gelenOyun != null) {
-            descr.text = gelenOyun.description
+            descr.text = gelenOyun.description_raw
             oyunismi.text = gelenOyun.name
             Picasso.get().load(gelenOyun.background_image).fit().into(ressim)
             reddit.setOnClickListener {
@@ -69,7 +69,7 @@ class Details : Fragment() {
                 startActivity(urlIntent)
             }
             textfav.setOnClickListener {
-                if (gelenOyun.isFav == false) {
+                if (!gelenOyun.isFav) {
                     gelenOyun.isFav = !gelenOyun.isFav
                     changeTheValue(!gelenOyun.isFav, textfav)
                 }
