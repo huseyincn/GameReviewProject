@@ -69,9 +69,11 @@ class Details : Fragment() {
                 startActivity(urlIntent)
             }
             textfav.setOnClickListener {
-                if (!gelenOyun.isFav) {
-                    gelenOyun.isFav = !gelenOyun.isFav
-                    changeTheValue(!gelenOyun.isFav, textfav)
+                if (arananOyun != null) {
+                    if (!arananOyun.isFav) {
+                        arananOyun.isFav = !arananOyun.isFav
+                        changeTheValue(arananOyun.isFav, textfav)
+                    }
                 }
             }
             setClickListeners(view, gelenOyun.isFav)
@@ -112,8 +114,10 @@ class Details : Fragment() {
     }
 
     fun changeTheValue(gameData: Boolean, textFav: TextView) {
-        if (gameData) textFav.text = "Favourited"
-        else textFav.text = "Favourite"
+        if (gameData)
+            textFav.text = "Favourited"
+        else
+            textFav.text = "Favourite"
     }
 }
 

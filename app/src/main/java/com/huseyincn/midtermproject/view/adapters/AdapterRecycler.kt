@@ -30,6 +30,13 @@ class AdapterRecycler(val renkli: Boolean = true) :
         notifyDataSetChanged()
     }
 
+    fun addData(newList: List<Game>) {
+        var size = this._data.size
+        _data.addAll(newList)
+        var sizenew = this._data.size
+        notifyItemRangeChanged(size,sizenew)
+    }
+
     fun addItem(position: Int, toAdd: Game) {
         _data.add(position, toAdd)
         notifyItemInserted(position)

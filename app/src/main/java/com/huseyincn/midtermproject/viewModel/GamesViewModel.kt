@@ -15,6 +15,10 @@ class GamesViewModel : ViewModel() {
         _gameDatas.value?.add(toAdd)
     }
 
+    fun addData(toAdd: List<Game>) {
+        _gameDatas.value?.addAll(toAdd)
+    }
+
     fun updateData(toAdd: List<Game>) {
         _gameDatas.value?.clear()
         _gameDatas.value?.addAll(toAdd)

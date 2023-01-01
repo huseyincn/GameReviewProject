@@ -21,6 +21,7 @@ import com.huseyincn.midtermproject.model.data.Game
 import com.huseyincn.midtermproject.model.data.RawgResp
 import com.huseyincn.midtermproject.model.repository.rawgInterface
 import com.huseyincn.midtermproject.view.adapters.AdapterRecycler
+import com.huseyincn.midtermproject.view.adapters.PaginationScrollListener
 import com.huseyincn.midtermproject.viewModel.DescViewModel
 import com.huseyincn.midtermproject.viewModel.GamesViewModel
 import com.squareup.moshi.Moshi
@@ -36,6 +37,13 @@ class Games : Fragment() {
 
     private lateinit var viewModel: GamesViewModel
     private lateinit var descVM: DescViewModel
+
+    private var isLastPage: Boolean = false
+    private var isLoading: Boolean = false
+    private var page_num: Int = 2
+    private var searchpagenum: Int = 2
+    private var searchMode: Boolean = false
+    private var searchKey : String = ""
 
     private val GAMEURL =
         "https://api.rawg.io/api/"
@@ -67,8 +75,28 @@ class Games : Fragment() {
 
         nogame.visibility = View.GONE
         recView1.adapter = adapter
-        recView1.layoutManager = LinearLayoutManager(context)
+        val layman = LinearLayoutManager(context)
+        recView1.layoutManager = layman
         enableBottomNavBar()
+
+        recView1.addOnScrollListener(object : PaginationScrollListener(layman) {
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+
+            override fun loadMoreItems() {
+                isLoading = true
+                if (!searchMode)
+                    paginateTheGame(adapter)
+                else
+                    paginateTheSearch(adapter)
+            }
+
+        })
 
         viewModel.liveData.observe(viewLifecycleOwner, Observer {
             adapter.updateData(it)
@@ -78,7 +106,9 @@ class Games : Fragment() {
         val queryListener = object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.length!! >= 3) {
-                    searchTheGame(query,adapter,nogame)
+                    searchMode = true
+                    searchKey = query
+                    searchTheGame(query, adapter, nogame)
                 } else {
                     nogame.visibility = View.GONE
                     viewModel.liveData.value?.let { adapter.updateData(it) }
@@ -93,13 +123,15 @@ class Games : Fragment() {
 
         searcher.setOnQueryTextListener(queryListener)
         setClickListeners(adapter)
-    //getDatas(adapter)
+        //getDatas(adapter)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[GamesViewModel::class.java]
         descVM = ViewModelProvider(requireActivity())[DescViewModel::class.java]
+        page_num = ((viewModel.liveData.value?.size)?.div(10))?.plus(1) ?: 2
+        searchpagenum = 2
         getDatasonCreate()
     }
 
@@ -129,28 +161,6 @@ class Games : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility =
             View.VISIBLE
     }
-
-    private fun getDatas(adapter: AdapterRecycler) {
-        val apiService = retrofit.create(rawgInterface::class.java)
-        val results = apiService.getGames()
-        results.enqueue(object : Callback<RawgResp> {
-            override fun onResponse(call: Call<RawgResp>, response: Response<RawgResp>) {
-                if (response.code() == 200) {
-                    var gamelist = response.body()
-                    gamelist?.let {
-                        viewModel.updateData(it.results)
-                        adapter.updateData(it.results)
-                    }
-                    println(gamelist)
-                }
-            }
-
-            override fun onFailure(call: Call<RawgResp>, t: Throwable) {
-                Log.e("hata", "api çekilirken hata oluştu")
-            }
-        })
-    }
-
 
     private fun getDatasonCreate() {
         val apiService = retrofit.create(rawgInterface::class.java)
@@ -231,5 +241,55 @@ class Games : Fragment() {
 
             }
         }
+    }
+
+    private fun paginateTheGame(adapter: AdapterRecycler) {
+        val apiService = retrofit.create(rawgInterface::class.java)
+        val results = apiService.getGames(pageNum = page_num.toString())
+        results.enqueue(object : Callback<RawgResp> {
+            override fun onResponse(call: Call<RawgResp>, response: Response<RawgResp>) {
+                if (response.code() == 200) {
+                    var gamelist = response.body()
+                    gamelist?.let {
+                        viewModel.addData(it.results)
+                        adapter.addData(it.results)
+                        if (it.next != null)
+                            page_num++
+                    }
+                    println(gamelist)
+                    isLoading = false
+                }
+            }
+
+            override fun onFailure(call: Call<RawgResp>, t: Throwable) {
+                Log.e("hata", "api çekilirken hata oluştu")
+                isLoading = false
+            }
+        })
+    }
+
+    private fun paginateTheSearch(adapter: AdapterRecycler) {
+        val apiService = retrofit.create(rawgInterface::class.java)
+        val results = apiService.getSearched(searched= searchKey,pageNum = searchpagenum.toString())
+        results.enqueue(object : Callback<RawgResp> {
+            override fun onResponse(call: Call<RawgResp>, response: Response<RawgResp>) {
+                if (response.code() == 200) {
+                    var gamelist = response.body()
+                    gamelist?.let {
+                        viewModel.addData(it.results)
+                        adapter.addData(it.results)
+                        if (it.next != null)
+                            page_num++
+                    }
+                    println(gamelist)
+                    isLoading = false
+                }
+            }
+
+            override fun onFailure(call: Call<RawgResp>, t: Throwable) {
+                Log.e("hata", "api çekilirken hata oluştu")
+                isLoading = false
+            }
+        })
     }
 }
