@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huseyincn.midtermproject.R
 import com.huseyincn.midtermproject.model.data.Game
 import com.huseyincn.midtermproject.viewModel.DescViewModel
+import com.huseyincn.midtermproject.viewModel.FavouriteViewModel
 import com.huseyincn.midtermproject.viewModel.GamesViewModel
 import com.squareup.picasso.Picasso
 
@@ -26,6 +27,7 @@ class Details : Fragment() {
 
     private lateinit var viewModel: GamesViewModel
     private lateinit var viewModeldesc: DescViewModel
+    private lateinit var favGamesvm: FavouriteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -47,7 +49,6 @@ class Details : Fragment() {
                     arananOyun = game
             }
         }
-        var isFav = arananOyun?.isFav
 
         val descr: TextView = view.findViewById(R.id.describ)
         val ressim: ImageView = view.findViewById(R.id.imagegame)
@@ -55,6 +56,11 @@ class Details : Fragment() {
         val websitte: TextView = view.findViewById(R.id.websitelink)
         val oyunismi: TextView = view.findViewById(R.id.gamename)
         val textfav: TextView = view.findViewById(R.id.favourites)
+
+        if (favGamesvm.liveData.value?.contains(arananOyun) == false)
+            textfav.text = "Favourite"
+        else
+            textfav.text = "Favourited"
 
         if (gelenOyun != null) {
             descr.text = gelenOyun.description_raw
@@ -70,10 +76,11 @@ class Details : Fragment() {
             }
             textfav.setOnClickListener {
                 if (arananOyun != null) {
-                    if (!arananOyun.isFav) {
-                        arananOyun.isFav = !arananOyun.isFav
-                        changeTheValue(arananOyun.isFav, textfav)
-                    }
+                    if (favGamesvm.liveData.value?.contains(arananOyun) == false) {
+                        favGamesvm.addItem(arananOyun)
+                        textfav.text = "Favourited"
+                    } else
+                        textfav.text = "Favourite"
                 }
             }
             setClickListeners(view, gelenOyun.isFav)
@@ -89,12 +96,6 @@ class Details : Fragment() {
     fun setClickListeners(view: View, isFav: Boolean?) {
         val textViewback: TextView = view.findViewById(R.id.back2)
         val imgViewBack: ImageView = view.findViewById(R.id.back1)
-        val textfav: TextView = view.findViewById(R.id.favourites)
-
-
-        if (isFav != null) {
-            changeTheValue(isFav, textfav)
-        }
 
         textViewback.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
@@ -110,14 +111,7 @@ class Details : Fragment() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[GamesViewModel::class.java]
         viewModeldesc = ViewModelProvider(requireActivity())[DescViewModel::class.java]
-
-    }
-
-    fun changeTheValue(gameData: Boolean, textFav: TextView) {
-        if (gameData)
-            textFav.text = "Favourited"
-        else
-            textFav.text = "Favourite"
+        favGamesvm = ViewModelProvider(requireActivity())[FavouriteViewModel::class.java]
     }
 }
 
